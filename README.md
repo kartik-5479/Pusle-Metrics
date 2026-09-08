@@ -9,13 +9,13 @@ Pulse Metrics is a Streamlit healthcare dashboard that turns supported medical r
 - Image report analysis through Gemini multimodal input
 - Structured Gemini output with guarded parsing and missing-value handling
 - Normal, borderline, and abnormal parameter summaries
-- SQLite analysis history containing summaries rather than original files
-- Health insights, educational guides, and privacy-focused messaging
+- Session-based report analysis without persistent medical-report storage
+- Educational guides and privacy-focused messaging
 - Responsive light/dark dashboard styling
 
 ## Technology
 
-Python, Streamlit, Pandas, NumPy, Pillow, PyMuPDF, Google GenAI SDK, python-dotenv, and SQLite.
+Python, Streamlit, Pandas, NumPy, Pillow, PyMuPDF, Google GenAI SDK, and python-dotenv.
 
 ## Setup
 
@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 ```text
 GEMINI_API_KEY=your_key_here
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.6-flash
 ```
 
 The key is loaded with `python-dotenv` and is never displayed or logged. Do not commit `.env`.
@@ -47,8 +47,8 @@ Reports are validated at 10 MB and limited to PDF, JPG, JPEG, and PNG. Text-base
 
 ## Privacy and safety
 
-The local SQLite database stores report metadata and analysis summaries for history views. It does not store uploaded files. This analysis is for informational purposes only and is not a medical diagnosis. Please consult a qualified healthcare professional for medical advice. Pulse Metrics does not recommend prescription medication.
+Uploaded reports are processed in memory and are not written to disk by the application. This analysis is for informational purposes only and is not a medical diagnosis. Please consult a qualified healthcare professional for medical advice. Pulse Metrics does not recommend prescription medication.
 
 ## Future improvements
 
-Possible next steps include authenticated storage, encrypted deployment storage, OCR for image-only PDFs, clinician-reviewed terminology, richer history filtering, and automated integration tests.
+Possible next steps include authenticated storage, encrypted deployment storage, OCR for image-only PDFs, clinician-reviewed terminology, and automated integration tests.

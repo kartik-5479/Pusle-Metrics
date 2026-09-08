@@ -1,18 +1,16 @@
-from pathlib import Path
+import hashlib
 from typing import Optional
 
 import streamlit as st
 
 from services.document_service import DocumentProcessingError, process_document
 from services.gemini_service import GeminiAnalysisError, GeminiConfigurationError, analyze_report
-from services.history_service import save_analysis
 from utils.validators import validate_upload
 
 
 def render_upload_section() -> Optional[dict]:
     """Render upload flow and return a newly completed analysis, if any."""
-    st.markdown("## Upload Your Medical Report")
-    st.caption("Drag and drop your report here or browse files. Supported formats: PDF, JPG, PNG (Max 10 MB).")
+    st.markdown("<div class=\"pm-upload-heading\"><h2>Upload Your Medical Report</h2><p>PDF, JPG, JPEG, or PNG · maximum 10 MB</p></div>", unsafe_allow_html=True)
     uploaded_file = st.file_uploader(
         "Choose a medical report",
         type=["pdf", "jpg", "jpeg", "png"],
@@ -20,6 +18,7 @@ def render_upload_section() -> Optional[dict]:
         key="report_uploader",
     )
     if uploaded_file is None:
+        st.markdown('<div class="pm-upload-empty"><div class="pm-upload-icon">↑</div><strong>Drop your report here</strong><span>or choose a file above to get started</span></div>', unsafe_allow_html=True)
         return None
 
     validation_error = validate_upload(uploaded_file)
@@ -27,21 +26,26 @@ def render_upload_section() -> Optional[dict]:
         st.error(validation_error)
         return None
 
-    report_signature = f"{uploaded_file.name}:{uploaded_file.size}"
+    file_bytes = uploaded_file.getvalue()
+    report_signature = hashlib.sha256(file_bytes).hexdigest()
     if st.session_state.get("processed_signature") == report_signature:
         return st.session_state.get("analysis")
 
+    st.markdown(
+        f'<div class="pm-upload-meta"><strong>{uploaded_file.name}</strong>'
+        f'<span>{uploaded_file.size / 1024:.1f} KB · {uploaded_file.type or "Unknown type"}</span>'
+        "</div>",
+        unsafe_allow_html=True,
+    )
     if not st.button("Analyze Report", type="primary", use_container_width=True):
         st.info(f"Ready to analyze **{uploaded_file.name}**.")
         return None
 
     try:
         with st.spinner("Reading your medical report..."):
-            document = process_document(uploaded_file.name, uploaded_file.getvalue())
+            document = process_document(uploaded_file.name, file_bytes)
         with st.spinner("AI is analyzing your report..."):
             analysis = analyze_report(document)
-        with st.spinner("Preparing your health insights..."):
-            save_analysis(uploaded_file.name, analysis)
         st.session_state.analysis = analysis
         st.session_state.report_name = uploaded_file.name
         st.session_state.processed_signature = report_signature

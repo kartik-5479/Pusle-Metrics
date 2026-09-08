@@ -6,7 +6,7 @@ def render_hero() -> None:
         """<section class="pm-hero">
         <div class="pm-eyebrow">A clearer view of your health</div>
         <h1>Your Health Report,<br><span>Simplified with AI</span></h1>
-        <p class="pm-muted" style="max-width:650px;font-size:1.05rem">Upload your medical reports and get easy-to-understand insights, personalized analysis and health recommendations.</p>
+        <p class="pm-muted">Upload your medical reports and get easy-to-understand insights, personalized analysis and health recommendations.</p>
         </section>""",
         unsafe_allow_html=True,
     )
@@ -19,6 +19,6 @@ def render_hero() -> None:
     for column, (icon, title, detail) in zip(columns, features):
         with column:
             st.markdown(
-                f'<div class="pm-card pm-feature"><div style="font-size:1.5rem">{icon}</div><strong>{title}</strong><span>{detail}</span></div>',
+                f'<div class="pm-card pm-feature"><div class="pm-feature-icon">{icon}</div><strong>{title}</strong><span>{detail}</span></div>',
                 unsafe_allow_html=True,
             )

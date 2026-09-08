@@ -1,8 +1,35 @@
+# Virtual environments
 venv/
+.venv/
+
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Environment variables / secrets
 .env
+.env.*
+!.env.example
+
+# Streamlit
 .streamlit/secrets.toml
+
+# Database
 data/*.db
+data/*.sqlite
+data/*.sqlite3
+
+# Uploaded/generated files
 data/uploads/
+
+# Logs
 *.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

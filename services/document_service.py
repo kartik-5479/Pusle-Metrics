@@ -23,17 +23,30 @@ def process_document(file_name: str, content: bytes) -> Dict[str, object]:
 def _process_pdf(content: bytes) -> Dict[str, object]:
     try:
         document = fitz.open(stream=content, filetype="pdf")
-        text = "\n".join(page.get_text("text") for page in document).strip()
+        if document.needs_pass:
+            raise DocumentProcessingError("This PDF is password-protected and cannot be read.")
+        page_text = [page.get_text("text").strip() for page in document]
+        text = "\n\n".join(
+            f"--- Page {index} ---\n{value}"
+            for index, value in enumerate(page_text, start=1)
+            if value
+        ).strip()
         page_count = document.page_count
         document.close()
+    except DocumentProcessingError:
+        raise
     except Exception as exc:
         raise DocumentProcessingError("The PDF could not be read.") from exc
 
-    if not text:
-        raise DocumentProcessingError(
-            "This PDF does not contain selectable text. Image-only PDFs are not supported yet."
-        )
-    return {"kind": "text", "text": text, "page_count": page_count}
+    if text:
+        return {"kind": "text", "text": text, "page_count": page_count}
+    return {
+        "kind": "pdf",
+        "pdf_bytes": content,
+        "mime_type": "application/pdf",
+        "text": "",
+        "page_count": page_count,
+    }
 
 
 def _process_image(content: bytes, extension: str) -> Dict[str, object]:

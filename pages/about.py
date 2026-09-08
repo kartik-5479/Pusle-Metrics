@@ -13,7 +13,7 @@ def render() -> None:
     with columns[0]:
         st.markdown('<div class="pm-card"><h3>How it works</h3><p>Upload a supported report, let the document service read it, and Gemini returns a validated structured summary. The app does not invent missing patient information or test values.</p></div>', unsafe_allow_html=True)
     with columns[1]:
-        st.markdown('<div class="pm-card"><h3>Technology</h3><p>Python · Streamlit · Google GenAI · PyMuPDF · Pillow · SQLite · Pandas</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="pm-card"><h3>Technology</h3><p>Python · Streamlit · Google GenAI · PyMuPDF · Pillow · Pandas</p></div>', unsafe_allow_html=True)
     st.subheader("Privacy approach")
-    st.write("API credentials are loaded from environment variables. Original uploaded files are processed in memory and are not stored by the history service. The local database stores summaries for history views.")
+    st.write("API credentials are loaded from environment variables. Uploaded files are processed in memory and are not written to disk by Pulse Metrics.")
     st.markdown(f'<div class="pm-disclaimer">❤️ {DISCLAIMER}</div>', unsafe_allow_html=True)
