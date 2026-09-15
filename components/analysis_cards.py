@@ -16,6 +16,7 @@ def render_analysis_cards(
     display_name = report_name or ("Blood_Test_Report.pdf" if sample else "Report")
     safe_name = escape(str(display_name))
     safe_status = escape(str(summary.get("overall_status", "Not available")))
+    st.markdown(f'<div class="pm-analysis-banner">{title}</div>', unsafe_allow_html=True)
     st.markdown(
         f"""<div class="pm-report-card">
         <div class="pm-report-heading">
@@ -33,7 +34,6 @@ def render_analysis_cards(
         </div>""",
         unsafe_allow_html=True,
     )
-    st.markdown(f'<div class="pm-analysis-banner">{title}</div>', unsafe_allow_html=True)
     button_column = st.columns([1, 2, 1])[1]
     with button_column:
         if st.button("View Detailed Analysis →", key="view_detailed_analysis", type="secondary", use_container_width=True):

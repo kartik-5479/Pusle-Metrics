@@ -107,6 +107,7 @@ def apply_styles() -> None:
         .pm-report-heading h3 {{ color: var(--pm-text); margin: .35rem 0 .15rem; }}
         .pm-report-details {{ display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:1rem;
             border-top:1px solid var(--pm-border); margin-top:1rem; padding-top:1rem; }}
+        .pm-report-details > div {{ text-align:center; }}
         .pm-report-details span {{ display:block; color:var(--pm-muted); font-size:.75rem; margin-bottom:.3rem; }}
         .pm-report-details strong {{ color:var(--pm-text); font-size:.9rem; }}
         .pm-overall {{ background: linear-gradient(135deg, var(--pm-card), #EFF6FF); margin-bottom: .8rem; }}
@@ -115,10 +116,29 @@ def apply_styles() -> None:
             box-shadow:0 12px 26px rgba(37, 99, 235, .28); color:#FFFFFF;
             text-align:center; font-size:clamp(1.35rem, 2.7vw, 2.15rem); font-weight:800;
             letter-spacing:-.025em; line-height:1.2; }}
+        [class*="st-key-view_detailed_analysis"] .stButton > button {{
+            min-height:3.75rem; border:1px solid #3B82F6; border-radius:16px;
+            background:linear-gradient(135deg, #1D4ED8, #2563EB); color:#FFFFFF;
+            box-shadow:0 12px 26px rgba(37, 99, 235, .24);
+        }}
+        [class*="st-key-view_detailed_analysis"] .stButton > button:hover {{
+            border-color:#60A5FA; background:linear-gradient(135deg, #2563EB, #3B82F6);
+            color:#FFFFFF; box-shadow:0 16px 30px rgba(37, 99, 235, .3);
+        }}
+        [class*="st-key-view_detailed_analysis"] .stButton > button p {{
+            color:#FFFFFF; font-size:1.05rem; font-weight:800;
+        }}
         .pm-overall {{ text-align:center; padding:1.6rem; }}
         .pm-upload-meta {{ display:flex; justify-content:space-between; gap:1rem; align-items:center;
             border: 2px dashed #93C5FD; border-radius: 14px; padding: 1rem; margin: .8rem 0; background: #EFF6FF; color: #1E3A8A; }}
         .pm-upload-meta span {{ color: #64748B; font-size: .85rem; }}
+        [class*="st-key-analyze_report_action"] {{ max-width: 760px; margin: 1.15rem auto .95rem; }}
+        [class*="st-key-analyze_report_action"] .stButton > button {{
+            min-height: 4.25rem; border-radius: 16px;
+        }}
+        [class*="st-key-analyze_report_action"] .stButton > button p {{
+            font-size: 1.65rem; font-weight: 900; letter-spacing: .01em;
+        }}
         .pm-table-wrap {{ overflow-x:auto; border: 1px solid var(--pm-border); border-radius: 14px; background: var(--pm-card); }}
         .pm-table {{ border-collapse: collapse; width: 100%; min-width: 820px; color: var(--pm-text); }}
         .pm-table th, .pm-table td {{ border-bottom: 1px solid var(--pm-border); padding: .85rem; text-align: left; vertical-align: top; }}

@@ -37,7 +37,9 @@ def render_upload_section() -> Optional[dict]:
         "</div>",
         unsafe_allow_html=True,
     )
-    if not st.button("Analyze Report", type="primary", use_container_width=True):
+    with st.container(key="analyze_report_action"):
+        analyze_clicked = st.button("Analyze Report", type="primary", use_container_width=True)
+    if not analyze_clicked:
         st.info(f"Ready to analyze **{uploaded_file.name}**.")
         return None
 
